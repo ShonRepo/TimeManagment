@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TimeManagmetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TimeManagmetEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="accounting" EntityType="TimeManagmetModel.accounting" />
+    <EntitySet Name="role" EntityType="TimeManagmetModel.role" />
+    <EntitySet Name="status" EntityType="TimeManagmetModel.status" />
+    <EntitySet Name="sysdiagrams" EntityType="TimeManagmetModel.sysdiagrams" />
+    <EntitySet Name="user" EntityType="TimeManagmetModel.user" />
+    <AssociationSet Name="FK_accounting_status" Association="TimeManagmetModel.FK_accounting_status">
+      <End Role="status" EntitySet="status" />
+      <End Role="accounting" EntitySet="accounting" />
+    </AssociationSet>
+    <AssociationSet Name="FK_accounting_user" Association="TimeManagmetModel.FK_accounting_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="accounting" EntitySet="accounting" />
+    </AssociationSet>
+    <AssociationSet Name="FK_user_role" Association="TimeManagmetModel.FK_user_role">
+      <End Role="role" EntitySet="role" />
+      <End Role="user" EntitySet="user" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="accounting">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="startWork" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="endwork" Type="DateTime" Precision="3" />
+    <Property Name="user" Type="Int64" Nullable="false" />
+    <Property Name="status" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="status1" Relationship="TimeManagmetModel.FK_accounting_status" FromRole="accounting" ToRole="status" />
+    <NavigationProperty Name="user1" Relationship="TimeManagmetModel.FK_accounting_user" FromRole="accounting" ToRole="user" />
+  </EntityType>
+  <EntityType Name="role">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="user" Relationship="TimeManagmetModel.FK_user_role" FromRole="role" ToRole="user" />
+  </EntityType>
+  <EntityType Name="status">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="accounting" Relationship="TimeManagmetModel.FK_accounting_status" FromRole="status" ToRole="accounting" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="firstName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="lastName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="role" Type="Int64" Nullable="false" />
+    <Property Name="avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="accounting" Relationship="TimeManagmetModel.FK_accounting_user" FromRole="user" ToRole="accounting" />
+    <NavigationProperty Name="role1" Relationship="TimeManagmetModel.FK_user_role" FromRole="user" ToRole="role" />
+  </EntityType>
+  <Association Name="FK_accounting_status">
+    <End Type="TimeManagmetModel.status" Role="status" Multiplicity="1" />
+    <End Type="TimeManagmetModel.accounting" Role="accounting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="status">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="accounting">
+        <PropertyRef Name="status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_accounting_user">
+    <End Type="TimeManagmetModel.user" Role="user" Multiplicity="1" />
+    <End Type="TimeManagmetModel.accounting" Role="accounting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="accounting">
+        <PropertyRef Name="user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_user_role">
+    <End Type="TimeManagmetModel.role" Role="role" Multiplicity="1" />
+    <End Type="TimeManagmetModel.user" Role="user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="role">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user">
+        <PropertyRef Name="role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

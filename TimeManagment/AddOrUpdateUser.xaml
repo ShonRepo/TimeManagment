@@ -1,0 +1,36 @@
+﻿<Window x:Class="TimeManagment.AddOrUpdateUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeManagment"
+        mc:Ignorable="d"
+        Title="AddOrUpdateUser" ResizeMode="NoResize" Height="450" Width="400">
+    <ScrollViewer>
+        <StackPanel>
+            <GroupBox Header="Пользователь" >
+                <StackPanel>
+                    <Image Height="200" Name="avatar"></Image>
+                    <Button Click="AddAvatar">Выбрать</Button>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Фамилия" >
+                <TextBox x:Name="lastName"></TextBox>
+            </GroupBox>
+            <GroupBox Header="Имя">
+                <TextBox x:Name="firstName"></TextBox>
+            </GroupBox>
+            <GroupBox Header="Email">
+                <TextBox x:Name="email"></TextBox>
+            </GroupBox>
+            <GroupBox Header="Пароль">
+                <TextBox x:Name="pass"></TextBox>
+            </GroupBox>
+            <GroupBox Header="Роль">
+                <ComboBox x:Name="role" DisplayMemberPath="name"/>
+            </GroupBox>
+            <Button Click="Add" IsDefault="True">Сохранить</Button>
+            <Button IsCancel="True">Отменить</Button>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
